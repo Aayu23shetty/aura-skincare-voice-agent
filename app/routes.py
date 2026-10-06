@@ -49,7 +49,11 @@ def chat():
         return jsonify({
             "reply": answer,
             "tool_events": tool_events,
-            "mode": "ai" if os.getenv("OPENAI_API_KEY") and os.getenv("DEMO_MODE", "0") != "1" else "demo"
+            "mode": (
+                "gemini"
+                if os.getenv("GEMINI_API_KEY") and os.getenv("DEMO_MODE", "0") != "1"
+                else "demo"
+            )
         })
     except Exception as exc:
         import traceback
