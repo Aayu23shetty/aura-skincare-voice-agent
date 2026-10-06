@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Aura Skincare — Aria Voice CX</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">A</div>
+        <div>
+          <div class="brand-name">AURA SKINCARE</div>
+          <div class="brand-sub">ARIA · VOICE CX AGENT</div>
+        </div>
+      </div>
+      <div class="mode-pill" id="modePill">Checking agent…</div>
+    </header>
+
+    <main class="workspace">
+      <section class="hero">
+        <div>
+          <p class="eyebrow">BROWSER VOICE SUPPORT</p>
+          <h1>Talk to Aria.</h1>
+          <p class="hero-copy">A concise customer-support agent for Aura Skincare. Try an order lookup, a policy question, or an edge case.</p>
+        </div>
+        <div class="status-card">
+          <div class="status-label">LIVE STATE</div>
+          <div class="state" id="stateLabel">Idle</div>
+          <div class="state-dot" id="stateDot"></div>
+        </div>
+      </section>
+
+      <section class="grid">
+        <div class="panel call-panel">
+          <div class="panel-head">
+            <div>
+              <span class="kicker">CALL CONSOLE</span>
+              <h2>Voice session</h2>
+            </div>
+            <span class="mic-note" id="micNote">Microphone ready</span>
+          </div>
+
+          <div class="orb-wrap">
+            <div class="orb" id="orb">
+              <div class="orb-inner">
+                <span class="orb-letter">A</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="state-strip">
+            <div class="state-item"><span class="mini-dot"></span> Listening</div>
+            <div class="state-item"><span class="mini-dot"></span> Thinking</div>
+            <div class="state-item"><span class="mini-dot"></span> Speaking</div>
+          </div>
+
+          <div class="controls">
+            <button class="btn btn-primary" id="startBtn">Start Call</button>
+            <button class="btn btn-dark" id="endBtn" disabled>End Call</button>
+          </div>
+          <p class="hint">Tip: after starting, speak normally. Chrome/Edge provide the best browser speech-recognition support.</p>
+        </div>
+
+        <div class="panel orders-panel">
+          <div class="panel-head">
+            <div>
+              <span class="kicker">TEST DATA</span>
+              <h2>Sample orders</h2>
+            </div>
+            <span class="count">3 records</span>
+          </div>
+
+          <div class="order-list">
+            {% for oid, order in orders.items() %}
+            <button class="order-card" data-order="{{ oid }}">
+              <div class="order-top">
+                <strong>{{ oid }}</strong>
+                <span class="badge">{{ order.status }}</span>
+              </div>
+              <div class="order-customer">{{ order.customer }}</div>
+              <div class="order-product">{{ order.product }}</div>
+              <div class="order-bottom">
+                <span>₹{{ order.value }}</span>
+                <span>{{ order.notes }}</span>
+              </div>
+            </button>
+            {% endfor %}
+          </div>
+
+          <div class="suggestions">
+            <div class="suggestion-title">Try saying</div>
+            <button class="suggestion" data-say="Where is order ORD-101?">“Where is order ORD-101?”</button>
+            <button class="suggestion" data-say="I bought this 20 days ago and opened it. Can I return it?">“Can I return an opened product after 20 days?”</button>
+            <button class="suggestion" data-say="Can you book me a flight to Goa?">“Can you book me a flight to Goa?”</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel transcript-panel">
+        <div class="panel-head">
+          <div>
+            <span class="kicker">CALL LOG</span>
+            <h2>Conversation</h2>
+          </div>
+          <button class="text-btn" id="clearBtn">Clear</button>
+        </div>
+        <div class="transcript" id="transcript">
+          <div class="empty">
+            <div class="empty-icon">◌</div>
+            <p>Your live transcript will appear here.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel summary-panel hidden" id="summaryPanel">
+        <div class="panel-head">
+          <div>
+            <span class="kicker">POST-CALL</span>
+            <h2>Structured outcome</h2>
+          </div>
+          <button class="text-btn" id="copySummary">Copy JSON</button>
+        </div>
+        <pre id="summaryJson"></pre>
+      </section>
+
+      <footer>
+        <span>Aura Skincare · Fictional brand for assessment</span>
+        <span>Built as a focused browser CX prototype</span>
+      </footer>
+    </main>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

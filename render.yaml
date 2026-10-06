@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: aura-aria-voice-agent
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-5
+      - key: DEMO_MODE
+        value: "0"
